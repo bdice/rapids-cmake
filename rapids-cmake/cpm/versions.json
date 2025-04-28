@@ -64,10 +64,10 @@
       }
     },
     "nvtx3": {
-      "version": "3.1.0",
+      "version": "3.1.1",
       "git_shallow": false,
-      "git_url": "https://github.com/NVIDIA/NVTX.git",
-      "git_tag": "4808eeda29bb6dcfd38291d1a8ea280b48562c57"
+      "git_url": "https://github.com/alliepiper/NVTX.git",
+      "git_tag": "2ee5d0ca5ceb5aa3f5aaad7abc19af8448f86740"
     },
     "rmm": {
       "version": "${rapids-cmake-version}",
