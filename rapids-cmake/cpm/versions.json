@@ -67,7 +67,7 @@
       "version": "3.1.1",
       "git_shallow": false,
       "git_url": "https://github.com/alliepiper/NVTX.git",
-      "git_tag": "14c916f2e04cdcb2faab6b6bc5d196e6912805fe"
+      "git_tag": "c46ecc020257afdd67190d88f398bd59faa83b37"
     },
     "rmm": {
       "version": "${rapids-cmake-version}",
