@@ -12,9 +12,11 @@ if(possible_package_dir AND NOT DEFINED @name@_DIR)
   set(@name@_DIR "${possible_package_dir}")
 endif()
 
-CPMFindPackage(
-  "@_RAPIDS_CPM_ARGS@"
-  )
+# Store CPM args as a list variable, then expand it in the function call
+# This ensures proper argument separation and preserves multi-argument keywords like PATCH_COMMAND
+set(_cpm_args @_RAPIDS_CPM_ARGS@)
+CPMFindPackage(${_cpm_args})
+unset(_cpm_args)
 
 if(possible_package_dir)
   unset(possible_package_dir)
