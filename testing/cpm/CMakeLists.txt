@@ -70,6 +70,12 @@ add_cmake_config_test(cpm_package_override-patches.cmake)
 add_cmake_config_test(cpm_package_override-source-subdir.cmake)
 add_cmake_config_test(cpm_package_override-simple.cmake)
 add_cmake_config_test(cpm_package_override-url-mode.cmake)
+add_cmake_config_test(cpm_package_override-url-without-hash.cmake SHOULD_FAIL
+                      "has 'url' but is missing 'url_hash'")
+add_cmake_config_test(cpm_package_override-hash-without-url.cmake SHOULD_FAIL
+                      "has 'url_hash' but is missing 'url'")
+add_cmake_config_test(cpm_package_override-url-to-git.cmake)
+add_cmake_config_test(cpm_package_override-git-to-url.cmake)
 
 add_cmake_config_test(cpm_package_info-url-mode.cmake)
 

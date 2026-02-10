@@ -143,7 +143,8 @@ as needed. Each project must define ``version`` and either
 
     A required string representing the git url to be used when cloning the
     project locally by the :cmake:command:`rapids_cpm_find` when a locally
-    installed copy of the project can't be found.
+    installed copy of the project can't be found. When ``git_url`` is provided,
+    ``git_tag`` must also be supplied and ``url``/``url_hash`` must not be present.
 
     Supports the following placeholders:
         - ``${rapids-cmake-version}`` will be evaluated to 'major.minor' of the current rapids-cmake cal-ver value.

@@ -90,13 +90,22 @@ function(rapids_cpm_package_details_internal package_name version_var url_var ta
     string(JSON value ERROR_VARIABLE no_url_in_override GET "${override_json_data}" url)
     string(JSON value ERROR_VARIABLE no_url_hash_in_override GET "${override_json_data}" url_hash)
 
-    # If override provides git mode, clear any inherited url mode
+    set(override_has_git_fields FALSE)
+    set(override_has_url_fields FALSE)
     if(NOT no_git_url_in_override OR NOT no_git_tag_in_override)
+      set(override_has_git_fields TRUE)
+    endif()
+    if(NOT no_url_in_override OR NOT no_url_hash_in_override)
+      set(override_has_url_fields TRUE)
+    endif()
+
+    # If override provides git mode, clear any inherited url mode
+    if(override_has_git_fields)
       unset(url)
       unset(url_hash)
     endif()
     # If override provides url mode, clear any inherited git mode
-    if(NOT no_url_in_override OR NOT no_url_hash_in_override)
+    if(override_has_url_fields)
       unset(git_url)
       unset(git_tag)
     endif()
@@ -108,6 +117,26 @@ function(rapids_cpm_package_details_internal package_name version_var url_var ta
     # be specified
     if(NOT version)
       message(FATAL_ERROR "rapids_cmake can't parse '${package_name}' json entry, it is missing a `version` entry"
+      )
+    endif()
+
+    # Check for incomplete git mode
+    if(git_url AND NOT git_tag)
+      message(FATAL_ERROR "rapids_cmake can't parse '${package_name}' json entry, it has 'git_url' but is missing 'git_tag'"
+      )
+    endif()
+    if(git_tag AND NOT git_url)
+      message(FATAL_ERROR "rapids_cmake can't parse '${package_name}' json entry, it has 'git_tag' but is missing 'git_url'"
+      )
+    endif()
+
+    # Check for incomplete url mode
+    if(url AND NOT url_hash)
+      message(FATAL_ERROR "rapids_cmake can't parse '${package_name}' json entry, it has 'url' but is missing 'url_hash'"
+      )
+    endif()
+    if(url_hash AND NOT url)
+      message(FATAL_ERROR "rapids_cmake can't parse '${package_name}' json entry, it has 'url_hash' but is missing 'url'"
       )
     endif()
 

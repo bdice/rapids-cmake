@@ -36,34 +36,26 @@ include("${rapids-cmake-dir}/cpm/detail/package_info.cmake")
 # Test url package - should use URL and URL_HASH
 rapids_cpm_package_info(test_url_pkg VERSION_VAR version CPM_VAR cpm_args)
 
-list(FIND cpm_args "URL" url_index)
-if(url_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should contain 'URL' for url package.\nGot: ${cpm_args}")
-endif()
+# Verify URL mode args are present
+foreach(expected_arg IN ITEMS URL URL_HASH)
+  list(FIND cpm_args "${expected_arg}" arg_index)
+  if(arg_index EQUAL -1)
+    message(FATAL_ERROR "CPM args should contain '${expected_arg}' for url package.\nGot: ${cpm_args}"
+    )
+  endif()
+endforeach()
 
-list(FIND cpm_args "URL_HASH" url_hash_index)
-if(url_hash_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should contain 'URL_HASH' for url package.\nGot: ${cpm_args}")
-endif()
-
-list(FIND cpm_args "GIT_REPOSITORY" git_repo_index)
-if(NOT git_repo_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should NOT contain 'GIT_REPOSITORY' for url package.\nGot: ${cpm_args}"
-  )
-endif()
-
-list(FIND cpm_args "GIT_TAG" git_tag_index)
-if(NOT git_tag_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should NOT contain 'GIT_TAG' for url package.\nGot: ${cpm_args}")
-endif()
-
-list(FIND cpm_args "GIT_SHALLOW" git_shallow_index)
-if(NOT git_shallow_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should NOT contain 'GIT_SHALLOW' for url package.\nGot: ${cpm_args}"
-  )
-endif()
+# Verify git mode args are NOT present
+foreach(unexpected_arg IN ITEMS GIT_REPOSITORY GIT_TAG GIT_SHALLOW)
+  list(FIND cpm_args "${unexpected_arg}" arg_index)
+  if(NOT arg_index EQUAL -1)
+    message(FATAL_ERROR "CPM args should NOT contain '${unexpected_arg}' for url package.\nGot: ${cpm_args}"
+    )
+  endif()
+endforeach()
 
 # Verify the URL value is correct
+list(FIND cpm_args "URL" url_index)
 math(EXPR url_value_index "${url_index} + 1")
 list(GET cpm_args ${url_value_index} url_value)
 set(expected_url "https://github.com/NVIDIA/cccl/archive/abc123def456.tar.gz")
@@ -72,6 +64,7 @@ if(NOT url_value STREQUAL expected_url)
 endif()
 
 # Verify the URL_HASH value is correct
+list(FIND cpm_args "URL_HASH" url_hash_index)
 math(EXPR url_hash_value_index "${url_hash_index} + 1")
 list(GET cpm_args ${url_hash_value_index} url_hash_value)
 set(expected_hash "SHA256=deadbeef1234567890abcdef1234567890abcdef1234567890abcdef12345678")
@@ -83,17 +76,20 @@ endif()
 # Test git package - should use GIT_REPOSITORY/GIT_TAG
 rapids_cpm_package_info(test_git_pkg VERSION_VAR version CPM_VAR cpm_args)
 
-list(FIND cpm_args "GIT_REPOSITORY" git_repo_index)
-if(git_repo_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should contain 'GIT_REPOSITORY' for git package.\nGot: ${cpm_args}")
-endif()
+# Verify git mode args are present
+foreach(expected_arg IN ITEMS GIT_REPOSITORY GIT_TAG)
+  list(FIND cpm_args "${expected_arg}" arg_index)
+  if(arg_index EQUAL -1)
+    message(FATAL_ERROR "CPM args should contain '${expected_arg}' for git package.\nGot: ${cpm_args}"
+    )
+  endif()
+endforeach()
 
-list(FIND cpm_args "GIT_TAG" git_tag_index)
-if(git_tag_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should contain 'GIT_TAG' for git package.\nGot: ${cpm_args}")
-endif()
-
-list(FIND cpm_args "URL" url_index)
-if(NOT url_index EQUAL -1)
-  message(FATAL_ERROR "CPM args should NOT contain 'URL' for git package.\nGot: ${cpm_args}")
-endif()
+# Verify URL mode args are NOT present
+foreach(unexpected_arg IN ITEMS URL URL_HASH)
+  list(FIND cpm_args "${unexpected_arg}" arg_index)
+  if(NOT arg_index EQUAL -1)
+    message(FATAL_ERROR "CPM args should NOT contain '${unexpected_arg}' for git package.\nGot: ${cpm_args}"
+    )
+  endif()
+endforeach()
