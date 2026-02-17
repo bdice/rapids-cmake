@@ -1,6 +1,6 @@
 # =============================================================================
 # cmake-format: off
-# SPDX-FileCopyrightText: Copyright (c) 2021-2025, NVIDIA CORPORATION.
+# SPDX-FileCopyrightText: Copyright (c) 2021-2026, NVIDIA CORPORATION.
 # SPDX-License-Identifier: Apache-2.0
 # cmake-format: on
 # =============================================================================
@@ -36,6 +36,7 @@ add_cmake_build_test(cpm_generate_pins-pure-cpm)
 add_cmake_build_test(cpm_generate_pins-simple)
 add_cmake_build_test(cpm_generate_pins-simple-via-variable)
 add_cmake_build_test(cpm_generate_pins-var-and-arg)
+add_cmake_build_test(cpm_generate_pins-url-mode)
 add_cmake_config_test(cpm_convert_patch_json-special-chars.cmake)
 
 add_cmake_config_test(cpm_init-bad-default-path.cmake SHOULD_FAIL "rapids_cpm_init can't load")
@@ -68,6 +69,15 @@ add_cmake_config_test(cpm_package_override-obey-cpm-source-var.cmake)
 add_cmake_config_test(cpm_package_override-patches.cmake)
 add_cmake_config_test(cpm_package_override-source-subdir.cmake)
 add_cmake_config_test(cpm_package_override-simple.cmake)
+add_cmake_config_test(cpm_package_override-url-mode.cmake)
+add_cmake_config_test(cpm_package_override-url-without-hash.cmake SHOULD_FAIL
+                      "has 'url' but is missing 'url_hash'")
+add_cmake_config_test(cpm_package_override-hash-without-url.cmake SHOULD_FAIL
+                      "has 'url_hash' but is missing 'url'")
+add_cmake_config_test(cpm_package_override-url-to-git.cmake)
+add_cmake_config_test(cpm_package_override-git-to-url.cmake)
+
+add_cmake_config_test(cpm_package_info-url-mode.cmake)
 
 add_cmake_config_test(cpm_generate_patch_command-invalid.cmake)
 add_cmake_config_test(cpm_generate_patch_command-override-case-insensitive.cmake)

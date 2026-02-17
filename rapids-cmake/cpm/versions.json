@@ -14,9 +14,8 @@
     },
     "CCCL": {
       "version": "3.2.1",
-      "git_shallow": false,
-      "git_url": "https://github.com/NVIDIA/cccl.git",
-      "git_tag": "d25959ca2af34d24875427e8ed2ddfc315a34f2f"
+      "url": "https://github.com/NVIDIA/cccl/archive/d25959ca2af34d24875427e8ed2ddfc315a34f2f.tar.gz",
+      "url_hash": "SHA256=0bfcfe06cb27eff94cbd4d7e872d232abd65215c38bdba8eae0f3b380f3e764d"
     },
     "cuco": {
       "version": "0.0.1",
